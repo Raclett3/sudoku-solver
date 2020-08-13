@@ -15,34 +15,39 @@ fn read_numbers() -> Vec<usize> {
         .collect()
 }
 
+fn parse_input_into_vec(side_length: usize) -> Result<Vec<Vec<usize>>, &'static str> {
+    let board: Vec<Vec<_>> = (0..side_length).map(|_| read_numbers()).collect();
+
+    if board.len() < side_length {
+        return Err("Invalid input format: Not enough rows");
+    }
+
+    for row in board.iter() {
+        if row.len() < side_length {
+            return Err("Invalid input format: Not enough columns");
+        }
+
+        if row.len() > side_length {
+            return Err("Invalid input format: Too many columns");
+        }
+
+        if row.iter().any(|&x| x > side_length) {
+            return Err("Invalid input format: Number out of range");
+        }
+    }
+
+    Ok(board)
+}
+
 fn main() {
     println!("Sudoku Solver");
 
     let size = 3usize;
     let side_length = size * size;
-    let board: Vec<Vec<_>> = (0..side_length).map(|_| read_numbers()).collect();
+    let board = parse_input_into_vec(side_length);
 
-    if board.len() < side_length {
-        eprintln!("Invalid input format: Not enough rows");
-        std::process::exit(1);
-    }
-
-    for row in board.iter() {
-        if row.len() < side_length {
-            eprintln!("Invalid input format: Not enough columns");
-            std::process::exit(1);
-        }
-
-        if row.len() > side_length {
-            eprintln!("Invalid input format: Too many columns");
-            std::process::exit(1);
-        }
-
-        if row.iter().any(|&x| x > side_length) {
-            eprintln!("Invalid input format: Number out of range");
-            std::process::exit(1);
-        }
-    }
-
-    println!("{:?}", board);
+    match &board {
+        Ok(parsed) => println!("{:?}", parsed),
+        Err(err) => eprintln!("{}", err),
+    };
 }
