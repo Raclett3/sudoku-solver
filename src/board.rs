@@ -10,9 +10,17 @@ impl std::fmt::Display for Board {
         for y in 0..self.side_length {
             for x in 0..self.side_length {
                 let delimiter = if x == self.side_length - 1 {
-                    '\n'
+                    if y == self.side_length - 1 {
+                        ""
+                    } else if y % 3 == 2 {
+                        "\n\n"
+                    } else {
+                        "\n"
+                    }
+                } else if x % 3 == 2 {
+                    "  "
                 } else {
-                    ' '
+                    " "
                 };
                 if let Some(number) = self.get_number(x, y) {
                     write!(f, "{}{}", number, delimiter)?;
