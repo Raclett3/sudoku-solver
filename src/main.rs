@@ -1,7 +1,10 @@
 mod board;
+mod solver;
 
 use board::Board;
+use solver::solve;
 use std::io::stdin;
+use std::process::exit;
 
 fn read_line() -> String {
     let mut s = String::new();
@@ -57,10 +60,18 @@ fn main() {
     println!("Sudoku Solver");
 
     let size = 3usize;
-    let board = parse_input_into_vec(size);
-
-    match &board {
-        Ok(parsed) => println!("{}", parsed),
-        Err(err) => eprintln!("{}", err),
+    let board = match parse_input_into_vec(size) {
+        Ok(parsed) => parsed,
+        Err(err) => {
+            eprintln!("{}", err);
+            exit(1);
+        }
     };
+
+    if let Some(solved) = solve(&board) {
+        println!("{}", solved);
+    } else {
+        eprintln!("No valid answer found");
+        exit(1);
+    }
 }
