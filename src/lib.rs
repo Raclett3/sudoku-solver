@@ -19,5 +19,12 @@ mod test {
         assert_eq!(board.get_number(3, 3), None);
         board.remove_number(1, 1);
         assert_eq!(board.get_number(1, 1), None);
+
+        let mut board = Board::new(3);
+        for x in 0..9 {
+            board.set_number(x, 0, x + 1);
+        }
+        let formatted = "1 2 3 4 5 6 7 8 9\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\n";
+        assert_eq!(format!("{}", board), formatted);
     }
 }
