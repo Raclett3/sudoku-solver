@@ -45,7 +45,7 @@ impl Board {
 
     pub fn set_number(&mut self, x: usize, y: usize, number: usize) {
         if x < self.side_length && y < self.side_length {
-            if 0 < number && number <= self.side_length {
+            if 1 <= number && number <= self.side_length {
                 self.board[y][x] = Some(number);
             } else {
                 self.board[y][x] = None;
