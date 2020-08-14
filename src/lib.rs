@@ -26,5 +26,24 @@ mod test {
         }
         let formatted = "1 2 3 4 5 6 7 8 9\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\n";
         assert_eq!(format!("{}", board), formatted);
+
+        let mut board = Board::new(3);
+        assert!(board.allows_number(0, 0, 1));
+        assert!(!board.allows_number(0, 0, 0));
+        assert!(!board.allows_number(0, 0, 10));
+        board.set_number(8, 0, 1);
+        board.set_number(0, 8, 1);
+        board.set_number(1, 0, 2);
+        board.set_number(0, 1, 3);
+        board.set_number(8, 1, 4);
+        board.set_number(1, 8, 5);
+        assert!(!board.allows_number(0, 0, 1));
+        assert!(!board.allows_number(0, 0, 2));
+        assert!(!board.allows_number(0, 0, 3));
+        assert!(board.allows_number(0, 0, 4));
+        assert!(board.allows_number(0, 0, 5));
+        assert!(!board.allows_number(1, 0, 6));
+        assert!(board.allows_number(1, 1, 1));
+        assert!(!board.allows_number(1, 1, 4));
     }
 }

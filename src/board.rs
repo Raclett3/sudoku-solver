@@ -1,4 +1,4 @@
-#[derive(std::fmt::Debug)]
+#[derive(std::fmt::Debug, Clone)]
 pub struct Board {
     size: usize,
     side_length: usize,
@@ -57,5 +57,40 @@ impl Board {
         if x < self.side_length && y < self.side_length {
             self.board[y][x] = None;
         }
+    }
+
+    pub fn allows_number(&self, x: usize, y: usize, number: usize) -> bool {
+        if number < 1 || self.side_length < number {
+            return false;
+        }
+
+        if self.get_number(x, y).is_some() {
+            return false;
+        }
+
+        for x in 0..self.side_length {
+            if self.get_number(x, y) == Some(number) {
+                return false;
+            }
+        }
+
+        for y in 0..self.side_length {
+            if self.get_number(x, y) == Some(number) {
+                return false;
+            }
+        }
+
+        let origin_x = x - x % self.size;
+        let origin_y = y - y % self.size;
+
+        for x in 0..self.size {
+            for y in 0..self.size {
+                if self.get_number(origin_x + x, origin_y + y) == Some(number) {
+                    return false;
+                }
+            }
+        }
+
+        true
     }
 }
