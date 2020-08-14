@@ -27,7 +27,7 @@ fn read_numbers() -> Option<Vec<usize>> {
     })
 }
 
-fn parse_input_into_vec() -> Result<Board, &'static str> {
+fn parse_input_into_board() -> Result<Board, &'static str> {
     let parsed: Vec<Vec<_>> = std::iter::repeat(())
         .map(|_| read_numbers())
         .take_while(|x| x.is_some())
@@ -43,7 +43,7 @@ fn parse_input_into_vec() -> Result<Board, &'static str> {
             Equal => break num,
             Greater => {
                 return Err("Invalid input format: Number of columns should be a square number")
-            },
+            }
         }
         num += 1;
     };
@@ -79,7 +79,7 @@ fn parse_input_into_vec() -> Result<Board, &'static str> {
 fn main() {
     println!("Sudoku Solver");
 
-    let board = match parse_input_into_vec() {
+    let board = match parse_input_into_board() {
         Ok(parsed) => parsed,
         Err(err) => {
             eprintln!("{}", err);

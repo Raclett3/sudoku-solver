@@ -6,11 +6,7 @@ fn exhaustive_search(board: &mut Board, x: usize, y: usize) -> bool {
     }
 
     let next_x = (x + 1) % board.side_length;
-    let next_y = if x == board.side_length - 1 {
-        y + 1
-    } else {
-        y
-    };
+    let next_y = if x == board.side_length - 1 { y + 1 } else { y };
 
     if board.get_number(x, y).is_none() {
         for num in 1..=board.side_length {
@@ -19,7 +15,7 @@ fn exhaustive_search(board: &mut Board, x: usize, y: usize) -> bool {
             }
 
             board.set_number(x, y, num);
-        
+
             if exhaustive_search(board, next_x, next_y) {
                 return true;
             }
