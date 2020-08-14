@@ -79,6 +79,17 @@ fn parse_input_into_board() -> Result<Board, &'static str> {
 fn main() {
     println!("Sudoku Solver");
 
+    let mut count_solutions = false;
+    for arg in std::env::args().skip(1) {
+        match arg.as_str() {
+            "-c" => count_solutions = true,
+            option => {
+                eprintln!("Unknown option: {}", option);
+                exit(1);
+            }
+        }
+    }
+
     let board = match parse_input_into_board() {
         Ok(parsed) => parsed,
         Err(err) => {
@@ -87,8 +98,12 @@ fn main() {
         }
     };
 
-    if let Some(solved) = solve(&board) {
-        println!("{}", solved);
+    if let Some((solution, count)) = solve(&board, count_solutions) {
+        if count_solutions {
+            println!("{} solution(s) found", count);
+        } else {
+            println!("{}", solution);
+        }
     } else {
         eprintln!("No valid solution found");
         exit(1);
