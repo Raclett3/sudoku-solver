@@ -12,12 +12,12 @@ impl std::fmt::Display for Board {
                 let delimiter = if x == self.side_length - 1 {
                     if y == self.side_length - 1 {
                         ""
-                    } else if y % 3 == 2 {
+                    } else if y % self.size == self.size - 1 {
                         "\n\n"
                     } else {
                         "\n"
                     }
-                } else if x % 3 == 2 {
+                } else if x % self.size == self.size - 1 {
                     "  "
                 } else {
                     " "
