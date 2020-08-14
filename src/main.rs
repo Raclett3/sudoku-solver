@@ -41,7 +41,12 @@ fn parse_input_into_vec(size: usize) -> Result<Board, &'static str> {
         }
 
         for (x, &number) in row.iter().enumerate() {
-            board.set_number(x, y, number);
+            if number != 0 {
+                if !board.allows_number(x, y, number) {
+                    return Err("Invalid input: Some numbers conflict");
+                }
+                board.set_number(x, y, number);
+            }
         }
     }
 
