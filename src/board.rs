@@ -1,7 +1,7 @@
 #[derive(std::fmt::Debug, Clone)]
 pub struct Board {
-    size: usize,
-    side_length: usize,
+    pub size: usize,
+    pub side_length: usize,
     board: Vec<Vec<Option<usize>>>,
 }
 
