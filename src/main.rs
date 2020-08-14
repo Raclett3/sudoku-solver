@@ -55,7 +55,7 @@ fn main() {
     let board = parse_input_into_vec(size);
 
     match &board {
-        Ok(parsed) => println!("{:?}", parsed),
+        Ok(parsed) => println!("{}", parsed),
         Err(err) => eprintln!("{}", err),
     };
 }

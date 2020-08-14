@@ -5,6 +5,26 @@ pub struct Board {
     board: Vec<Vec<Option<usize>>>,
 }
 
+impl std::fmt::Display for Board {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for y in 0..self.side_length {
+            for x in 0..self.side_length {
+                let delimiter = if x == self.side_length - 1 {
+                    '\n'
+                } else {
+                    ' '
+                };
+                if let Some(number) = self.get_number(x, y) {
+                    write!(f, "{}{}", number, delimiter)?;
+                } else {
+                    write!(f, "x{}", delimiter)?;
+                }
+            }
+        }
+        Ok(())
+    }
+}
+
 impl Board {
     pub fn new(size: usize) -> Self {
         let side_length = size * size;
