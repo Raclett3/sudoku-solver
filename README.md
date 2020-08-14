@@ -28,6 +28,8 @@ x x 8 5 x x x 1 x
 x 9 x x x x 4 x x
 ```
 
+The size should be NxN, where N is a square number.
+
 ## How does this solve Sudoku?
 
 Brute-force. This tries placing every possible number.

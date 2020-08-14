@@ -3,32 +3,52 @@ mod solver;
 
 use board::Board;
 use solver::solve;
+use std::cmp::Ordering::*;
 use std::io::stdin;
 use std::process::exit;
 
-fn read_line() -> String {
+fn read_line() -> Option<String> {
     let mut s = String::new();
-    stdin().read_line(&mut s).unwrap();
-    s
-}
-
-fn read_numbers() -> Vec<usize> {
-    read_line()
-        .trim_end()
-        .split(' ')
-        .filter(|&x| !x.is_empty())
-        .map(|x| x.parse().unwrap_or(0))
-        .collect()
-}
-
-fn parse_input_into_vec(size: usize) -> Result<Board, &'static str> {
-    let side_length = size * size;
-    let mut board = Board::new(size);
-    let parsed: Vec<Vec<_>> = (0..side_length).map(|_| read_numbers()).collect();
-
-    if parsed.len() < side_length {
-        return Err("Invalid input format: Not enough rows");
+    let result = stdin().read_line(&mut s);
+    if result.is_ok() && result.unwrap() > 1 {
+        Some(s)
+    } else {
+        None
     }
+}
+
+fn read_numbers() -> Option<Vec<usize>> {
+    read_line().map(|line| {
+        line.trim_end()
+            .split(' ')
+            .filter(|&x| !x.is_empty())
+            .map(|x| x.parse().unwrap_or(0))
+            .collect()
+    })
+}
+
+fn parse_input_into_vec() -> Result<Board, &'static str> {
+    let parsed: Vec<Vec<_>> = std::iter::repeat(())
+        .map(|_| read_numbers())
+        .take_while(|x| x.is_some())
+        .flatten()
+        .collect();
+
+    let side_length = parsed.len();
+
+    let mut num = 1;
+    let size = loop {
+        match (num * num).cmp(&side_length) {
+            Less => (),
+            Equal => break num,
+            Greater => {
+                return Err("Invalid input format: Number of columns should be a square number")
+            },
+        }
+        num += 1;
+    };
+
+    let mut board = Board::new(size);
 
     for (y, row) in parsed.iter().enumerate() {
         if row.len() < side_length {
@@ -59,8 +79,7 @@ fn parse_input_into_vec(size: usize) -> Result<Board, &'static str> {
 fn main() {
     println!("Sudoku Solver");
 
-    let size = 3usize;
-    let board = match parse_input_into_vec(size) {
+    let board = match parse_input_into_vec() {
         Ok(parsed) => parsed,
         Err(err) => {
             eprintln!("{}", err);
