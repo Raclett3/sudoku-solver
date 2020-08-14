@@ -90,7 +90,7 @@ fn main() {
     if let Some(solved) = solve(&board) {
         println!("{}", solved);
     } else {
-        eprintln!("No valid answer found");
+        eprintln!("No valid solution found");
         exit(1);
     }
 }
