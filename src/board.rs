@@ -17,7 +17,7 @@ impl Board {
 
     pub fn get_number(&self, x: usize, y: usize) -> Option<usize> {
         if x < self.side_length && y < self.side_length {
-            self.board[x][y]
+            self.board[y][x]
         } else {
             None
         }
@@ -26,16 +26,16 @@ impl Board {
     pub fn set_number(&mut self, x: usize, y: usize, number: usize) {
         if x < self.side_length && y < self.side_length {
             if 0 < number && number <= self.side_length {
-                self.board[x][y] = Some(number);
+                self.board[y][x] = Some(number);
             } else {
-                self.board[x][y] = None;
+                self.board[y][x] = None;
             }
         }
     }
 
     pub fn remove_number(&mut self, x: usize, y: usize) {
         if x < self.side_length && y < self.side_length {
-            self.board[x][y] = None;
+            self.board[y][x] = None;
         }
     }
 }

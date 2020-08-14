@@ -27,7 +27,7 @@ fn parse_input_into_vec(size: usize) -> Result<Board, &'static str> {
         return Err("Invalid input format: Not enough rows");
     }
 
-    for (x, row) in parsed.iter().enumerate() {
+    for (y, row) in parsed.iter().enumerate() {
         if row.len() < side_length {
             return Err("Invalid input format: Not enough columns");
         }
@@ -40,7 +40,7 @@ fn parse_input_into_vec(size: usize) -> Result<Board, &'static str> {
             return Err("Invalid input format: Number out of range");
         }
 
-        for (y, &number) in row.iter().enumerate() {
+        for (x, &number) in row.iter().enumerate() {
             board.set_number(x, y, number);
         }
     }
