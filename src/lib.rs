@@ -24,7 +24,7 @@ mod test {
         for x in 0..9 {
             board.set_number(x, 0, x + 1);
         }
-        let formatted = "1 2 3 4 5 6 7 8 9\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\nx x x x x x x x x\n";
+        let formatted = "1 2 3  4 5 6  7 8 9\nx x x  x x x  x x x\nx x x  x x x  x x x\n\nx x x  x x x  x x x\nx x x  x x x  x x x\nx x x  x x x  x x x\n\nx x x  x x x  x x x\nx x x  x x x  x x x\nx x x  x x x  x x x";
         assert_eq!(format!("{}", board), formatted);
 
         let mut board = Board::new(3);
